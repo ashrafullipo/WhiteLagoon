@@ -1,0 +1,45 @@
+﻿@model WhiteLagoon.Domain.Entities.VillaNumber
+
+@{
+    ViewData["Title"] = "Delete Villa Number";
+}
+
+<div class="container mt-4">
+    <h2 class="text-danger mb-3">
+        <i class="bi bi-trash3-fill me-2"></i> Delete Villa Number
+    </h2>
+    <hr />
+
+    <div class="alert alert-warning shadow-sm">
+        <strong>Are you sure</strong> you want to delete this villa number:
+        <span class="fw-bold text-dark">@Model.Villa_Number</span>?
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">Villa Number</dt>
+        <dd class="col-sm-9">@Model.Villa_Number</dd>
+
+        <dt class="col-sm-3">Villa ID</dt>
+        <dd class="col-sm-9">@Model.VillaId</dd>
+
+        <dt class="col-sm-3">Special Details</dt>
+        <dd class="col-sm-9">@Model.Special_Details</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Villa_Number" />
+        <div class="text-end mt-3">
+            <button type="submit" class="btn btn-danger px-4 shadow-sm">
+                <i class="bi bi-trash3-fill me-2"></i> Confirm Delete
+            </button>
+            <a asp-action="Index" class="btn btn-secondary ms-2 px-4 shadow-sm">
+                <i class="bi bi-x-circle me-1"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

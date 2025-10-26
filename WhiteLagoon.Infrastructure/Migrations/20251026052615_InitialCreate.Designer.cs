@@ -12,8 +12,8 @@ using WhiteLagoon.Infrastructure.Data;
 namespace WhiteLagoon.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251024142628_SeedVillaToDB")]
-    partial class SeedVillaToDB
+    [Migration("20251026052615_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,8 @@ namespace WhiteLagoon.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Occupancy")
                         .HasColumnType("int");
@@ -129,6 +130,97 @@ namespace WhiteLagoon.Infrastructure.Migrations
                             Price = 190.0,
                             sqft = 500
                         });
+                });
+
+            modelBuilder.Entity("WhiteLagoon.Domain.Entities.VillaNumber", b =>
+                {
+                    b.Property<int>("Villa_Number")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Special_Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VillaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Villa_Number");
+
+                    b.HasIndex("VillaId");
+
+                    b.ToTable("VillaNumbers");
+
+                    b.HasData(
+                        new
+                        {
+                            Villa_Number = 101,
+                            Special_Details = "Pool facing room",
+                            VillaId = 1
+                        },
+                        new
+                        {
+                            Villa_Number = 102,
+                            Special_Details = "Beach access, Two Queen beds",
+                            VillaId = 2
+                        },
+                        new
+                        {
+                            Villa_Number = 103,
+                            Special_Details = "Garden view, King bed",
+                            VillaId = 1
+                        },
+                        new
+                        {
+                            Villa_Number = 104,
+                            Special_Details = "Sea view, Balcony",
+                            VillaId = 2
+                        },
+                        new
+                        {
+                            Villa_Number = 201,
+                            Special_Details = "Mountain view, Fireplace",
+                            VillaId = 3
+                        },
+                        new
+                        {
+                            Villa_Number = 202,
+                            Special_Details = "City center, Rooftop access",
+                            VillaId = 4
+                        },
+                        new
+                        {
+                            Villa_Number = 203,
+                            Special_Details = "Private terrace, King bed",
+                            VillaId = 3
+                        },
+                        new
+                        {
+                            Villa_Number = 204,
+                            Special_Details = "Modern interior, Gym access",
+                            VillaId = 4
+                        },
+                        new
+                        {
+                            Villa_Number = 301,
+                            Special_Details = "Desert view, Private spa",
+                            VillaId = 5
+                        },
+                        new
+                        {
+                            Villa_Number = 302,
+                            Special_Details = "Lake view, Fishing deck",
+                            VillaId = 6
+                        });
+                });
+
+            modelBuilder.Entity("WhiteLagoon.Domain.Entities.VillaNumber", b =>
+                {
+                    b.HasOne("WhiteLagoon.Domain.Entities.Villa", "Villa")
+                        .WithMany()
+                        .HasForeignKey("VillaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Villa");
                 });
 #pragma warning restore 612, 618
         }

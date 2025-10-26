@@ -47,7 +47,7 @@ namespace WhiteLagoon.WebApi.Controllers
             var villa = appDbContext.Villas.FirstOrDefault(v => v.Id == Id);
             if (villa == null)
             {
-                return NotFound();
+                return RedirectToAction("Error", "Home");
             }
             return View(villa);
         }
@@ -66,5 +66,36 @@ namespace WhiteLagoon.WebApi.Controllers
             }
             return View(villa);
         }
+
+
+
+        // GET: Delete Villa
+        public IActionResult Delete(int Id)
+        {
+            var villa = appDbContext.Villas.FirstOrDefault(v => v.Id == Id);
+            if (villa == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            return View(villa);
+        }
+
+        // POST: Delete Villa
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePOST(int Id)
+        {
+            var villa = appDbContext.Villas.FirstOrDefault(v => v.Id == Id);
+            if (villa == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            appDbContext.Villas.Remove(villa);
+            appDbContext.SaveChanges();
+            TempData["success"] = "Villa deleted successfully!";
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

@@ -4,7 +4,7 @@ using WhiteLagoon.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Step 1: Bootstrap Logger শুরু (Log.Logger, না log.logger ❌)
+// Step 1: Bootstrap Logger শুরু (Log.Logger, না log.logger ❌)
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.File("logs/bootstrap_log.txt", rollingInterval: RollingInterval.Day)
@@ -14,7 +14,7 @@ Log.Information("Starting up the application...");
 
 try
 {
-    // ✅ Step 2: Full Serilog configuration (after app settings loaded)
+    //  Step 2: Full Serilog configuration (after app settings loaded)
     builder.Host.UseSerilog((context, services, configuration) => configuration
         .ReadFrom.Configuration(context.Configuration)
         .ReadFrom.Services(services)
@@ -22,10 +22,19 @@ try
         .WriteTo.Console()
         .WriteTo.File("logs/full_log.txt", rollingInterval: RollingInterval.Day));
 
-    // ✅ Step 3: Add services to the container
+    //  Step 3: Add services to the container
     builder.Services.AddControllersWithViews();
     builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlOptions => sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,              
+            maxRetryDelay: TimeSpan.FromSeconds(10),  
+            errorNumbersToAdd: null       
+        )
+    )
+);
+
 
     var app = builder.Build();
 

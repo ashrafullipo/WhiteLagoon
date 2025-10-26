@@ -14,6 +14,7 @@ namespace WhiteLagoon.Infrastructure.Data
         }
 
         public DbSet<Villa> Villas { get; set; }
+        public DbSet<VillaNumber> VillaNumbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -88,6 +89,69 @@ namespace WhiteLagoon.Infrastructure.Data
                     CreatedDate = seedDate
                 }
             );
+            modelBuilder.Entity<VillaNumber>().HasData(
+    new VillaNumber
+    {
+        Villa_Number = 101,
+        VillaId = 1,
+        Special_Details = "Pool facing room"
+    },
+    new VillaNumber
+    {
+        Villa_Number = 102,
+        VillaId = 2,
+        Special_Details = "Beach access, Two Queen beds"
+    },
+    new VillaNumber
+    {
+        Villa_Number = 103,
+        VillaId = 1,
+        Special_Details = "Garden view, King bed"
+    },
+    new VillaNumber
+    {
+        Villa_Number = 104,
+        VillaId = 2,
+        Special_Details = "Sea view, Balcony"
+    },
+    new VillaNumber
+    {
+        Villa_Number = 201,
+        VillaId = 3,
+        Special_Details = "Mountain view, Fireplace"
+    },
+    new VillaNumber
+    {
+        Villa_Number = 202,
+        VillaId = 4,
+        Special_Details = "City center, Rooftop access"
+    },
+    new VillaNumber
+    {
+        Villa_Number = 203,
+        VillaId = 3,
+        Special_Details = "Private terrace, King bed"
+    },
+    new VillaNumber
+    {
+        Villa_Number = 204,
+        VillaId = 4,
+        Special_Details = "Modern interior, Gym access"
+    },
+    new VillaNumber
+    {
+        Villa_Number = 301,
+        VillaId = 5,
+        Special_Details = "Desert view, Private spa"
+    },
+    new VillaNumber
+    {
+        Villa_Number = 302,
+        VillaId = 6,
+        Special_Details = "Lake view, Fishing deck"
+    }
+);
+
         }
     }
 }

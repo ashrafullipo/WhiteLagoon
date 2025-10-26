@@ -1,0 +1,44 @@
+﻿@model IEnumerable<WhiteLagoon.Domain.Entities.VillaNumber>
+
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Villa Number List</h1>
+        <a asp-controller="VillaNumber" asp-action="Create" class="btn btn-success">
+            Create Villa Number
+        </a>
+    </div>
+
+    <!-- Table -->
+    <table class="table table-bordered table-striped">
+        <thead class="table-success">
+            <tr>
+                <th>Villa Id</th>
+                <th>Villa Number</th>
+                <th> Special Details</th>
+                <
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>@obj.VillaId</td>
+                    <td>@obj.Villa_Number</td>
+                    <td>@obj.Special_Details</td>
+                    
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="VillaNumber" asp-action="Update" asp-route-id="@obj.Villa_Number" class="btn btn-success mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-Villa_Number="@obj.Villa_Number" class="btn btn-danger">Delete</a>
+
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
